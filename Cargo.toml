@@ -1,0 +1,26 @@
+[package]
+name = "serde_cose"
+version = "0.1.0"
+authors = ["Mason Fischer <mason@kissr.co>"]
+license = "MIT OR Apache-2.0"
+description = "The COSE (RFC #8152) serialization format"
+edition = "2018"
+
+[[test]]
+name = "integration"
+path = "tests/lib.rs"
+
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+ed25519-dalek = "1.0.1"
+serde = {version = "1.0.116", features = ["derive"]}
+serde_bytes = "0.11"
+serde_cbor = "0.11.1"
+serde_repr = "0.1"
+
+[dev-dependencies]
+lazy_static = "1.4.0"
+hex = "0.4.2"
+serde_json = "1.0.57"
