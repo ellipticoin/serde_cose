@@ -1,24 +1,27 @@
+#[cfg(test)]
+extern crate rand;
 extern crate serde;
-mod hash_map_encoder;
+
+mod constants;
+mod hash_map;
 mod helpers;
 mod key;
-mod sign1;
+pub mod sig;
+pub mod sign1;
+use constants::HeaderParameter;
 pub use key::*;
 use sign1::Sign1;
 
-#[derive(Debug)]
-pub enum COSE {
-    Sign1(Sign1),
-}
-
-impl COSE {
+impl Sign1 {
     pub fn kid(&self) -> Vec<u8> {
-        match &self {
-            COSE::Sign1(Sign1 { unprotected, .. }) => unprotected[&4].to_vec(),
-        }
+        self.unprotected.0[&HeaderParameter::KID].to_vec()
+    }
+
+    pub fn message(&self) -> Vec<u8> {
+        self.message.to_vec()
     }
 }
 
-pub fn from_slice(bytes: &[u8]) -> COSE {
-    serde_cbor::from_slice(bytes).unwrap()
+pub fn from_slice(bytes: &[u8]) -> Result<Sign1, serde_cbor::Error> {
+    serde_cbor::from_slice(bytes)
 }

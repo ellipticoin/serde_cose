@@ -1,15 +1,9 @@
+mod common;
+use common::EXAMPLES_DIR;
+use serde::Deserialize;
 use serde_cose::{self, Curve, KeyType};
-use std::{env, fs::read_to_string, path::PathBuf};
-lazy_static! {
-    static ref EXAMPLES_DIR: String = format!(
-        "{}/../../../tests/fixtures/Examples",
-        PathBuf::from(env::current_exe().unwrap())
-            .parent()
-            .unwrap()
-            .to_str()
-            .unwrap()
-    );
-}
+use std::fs::read_to_string;
+
 #[derive(Deserialize, Debug)]
 struct Test {
     input: Input,
@@ -64,8 +58,8 @@ fn deserializes_sign1_ed25519() -> Result<(), std::io::Error> {
         *EXAMPLES_DIR
     ))?)?;
 
-    let cose = serde_cose::from_slice(&hex::decode(test.output.cbor).unwrap());
+    let sign1 = serde_cose::from_slice(&hex::decode(test.output.cbor).unwrap());
     let key: serde_cose::Key = test.input.sign0.key.into();
-    assert!(key.verify(&cose));
+    assert!(key.verify(&sign1.unwrap()));
     Ok(())
 }
