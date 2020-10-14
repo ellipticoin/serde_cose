@@ -1,7 +1,8 @@
-use ed25519_dalek::PublicKey;
+use ed25519_zebra::SigningKey;
+use std::convert::TryFrom;
 
 struct User {
-    public_key: ed25519_dalek::PublicKey,
+    public_key: ed25519_zebra::SigningKey,
 }
 
 fn main() {
@@ -20,9 +21,14 @@ fn main() {
 fn lookup_user(user_id: &[u8]) -> User {
     match std::str::from_utf8(&user_id).unwrap() {
         "11" => User {
-            public_key: PublicKey::from_bytes(
-                &hex::decode(&"d75a980182b10ab7d54bfed3c964073a0ee172f3daa62325af021a68f707511a")
-                    .unwrap(),
+            public_key: SigningKey::try_from(
+                <[u8; 32]>::try_from(
+                    &hex::decode(
+                        &"d75a980182b10ab7d54bfed3c964073a0ee172f3daa62325af021a68f707511a",
+                    )
+                    .unwrap()[..],
+                )
+                .unwrap(),
             )
             .unwrap(),
         },

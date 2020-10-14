@@ -4,10 +4,15 @@ use serde_repr::{Deserialize_repr, Serialize_repr};
 pub enum Algorithm {
     EdDSA = -8,
 }
-#[derive(Serialize_repr, Deserialize_repr, PartialEq, Debug, Clone, Eq, Hash)]
+#[derive(Serialize_repr, Deserialize_repr, PartialEq, Debug, Clone, Eq, PartialOrd, Ord, Hash)]
 #[repr(i32)]
 pub enum HeaderParameter {
     Algorithm = 1,
     ContentType = 3,
     KID = 4,
+}
+#[derive(Serialize_repr, Deserialize_repr, PartialEq, Debug, Clone, Eq, Hash)]
+#[repr(i32)]
+pub enum ContentType {
+    Text = 0,
 }

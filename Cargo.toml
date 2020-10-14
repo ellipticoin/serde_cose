@@ -16,7 +16,7 @@ edition = "2018"
 [dependencies]
 base64="*"
 hex = "0.4.2"
-ed25519-dalek = "1.0.0-pre.4"
+ed25519-zebra = "2.2.0"
 lazy_static = "1.4.0"
 serde = {version = "1.0.116", features = ["derive"]}
 serde_bytes = "0.11"

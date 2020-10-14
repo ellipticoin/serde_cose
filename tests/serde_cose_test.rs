@@ -58,8 +58,8 @@ fn deserializes_sign1_ed25519() -> Result<(), std::io::Error> {
         *EXAMPLES_DIR
     ))?)?;
 
-    let sign1 = serde_cose::from_slice(&hex::decode(test.output.cbor).unwrap());
+    let sign1 = serde_cose::from_slice(&hex::decode(test.output.cbor).unwrap()).unwrap();
     let key: serde_cose::Key = test.input.sign0.key.into();
-    assert!(key.verify(&sign1.unwrap()));
+    assert!(key.verify(&sign1));
     Ok(())
 }
