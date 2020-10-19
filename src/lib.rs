@@ -3,13 +3,14 @@ extern crate rand;
 extern crate serde;
 
 mod constants;
-mod map;
 mod helpers;
 mod key;
+mod map;
 pub mod sig;
 pub mod sign1;
-use constants::HeaderParameter;
+pub use constants::*;
 pub use key::*;
+pub use map::*;
 pub use sign1::Sign1;
 
 impl Sign1 {

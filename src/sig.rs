@@ -1,6 +1,4 @@
-use crate::{
-    constants::HeaderParameter, map::Map, serde::ser::SerializeSeq, sign1::Sign1,
-};
+use crate::{constants::HeaderParameter, map::Map, serde::ser::SerializeSeq, sign1::Sign1};
 use serde::{Serialize, Serializer};
 use serde_bytes::ByteBuf;
 

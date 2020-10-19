@@ -56,7 +56,7 @@ impl From<ed25519_zebra::VerificationKey> for Key {
 }
 
 impl Key {
-    pub fn verify(&self, sign1: &Sign1) -> bool {
+    pub fn verify(&self, sign1: &Sign1) -> Result<(), ()> {
         let message = serde_cbor::to_vec(&Sig::from(sign1.clone())).unwrap();
         match &self.crv {
             Curve::ED25519 => {
@@ -65,11 +65,11 @@ impl Key {
                 )
                 .unwrap();
                 let signature = ed25519_zebra::Signature::from(
-                    slice_to_array_64(&sign1.signature.as_ref().unwrap())
-                        .unwrap()
-                        .clone(),
+                    slice_to_array_64(&sign1.signature).unwrap().clone(),
                 );
-                verification_key.verify(&signature, &message).is_ok()
+                verification_key
+                    .verify(&signature, &message)
+                    .map_err(|_| ())
             }
         }
     }
