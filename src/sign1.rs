@@ -7,7 +7,7 @@ use ed25519_zebra::SigningKey;
 use serde::{Deserialize, Deserializer, Serialize, Serializer};
 use serde_bytes::ByteBuf;
 use serde_cbor::{tags::Tagged, value::to_value};
-use std::collections;
+use std::{collections, convert::TryFrom};
 
 #[derive(Debug, Clone, PartialEq)]
 pub struct Sign1 {
@@ -119,7 +119,10 @@ mod tests {
     fn signs_a_payload() {
         let signing_key = SigningKey::new(thread_rng());
         let verification_key = VerificationKey::from(&signing_key);
-        let mut sign1 = Sign1::new(b"test".to_vec());
+        let mut sign1 = Sign1::new(
+            b"test".to_vec(),
+            <[u8; 32]>::try_from(verification_key).unwrap().to_vec(),
+        );
         sign1.sign(signing_key);
         let key: Key = verification_key.into();
         key.verify(&mut sign1);

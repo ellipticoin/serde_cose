@@ -11,7 +11,7 @@ fn main() {
     let sign1 = serde_cose::from_slice(&cose_bytes).unwrap();
     let user = lookup_user(&sign1.kid());
     let key: serde_cose::Key = user.public_key.into();
-    if key.verify(&sign1) {
+    if key.verify(&sign1).is_ok() {
         println!("Valid Signature!")
     } else {
         println!("Invalid Signature :(")
