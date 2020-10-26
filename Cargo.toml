@@ -1,6 +1,6 @@
 [package]
 name = "serde_cose"
-version = "0.1.3"
+version = "0.1.4"
 authors = ["Mason Fischer <mason@kissr.co>"]
 license = "MIT OR Apache-2.0"
 description = "The COSE (RFC #8152) serialization format"
